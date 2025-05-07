@@ -10,7 +10,6 @@ import mysql.connector
 from mysql.connector import errorcode
 import MySQLdb
 
-
 import traceback
 import subprocess
 import requests
@@ -25,6 +24,7 @@ from core import isWindowOpen
 from core import windowClose
 from core import robotClick
 # from #sftp import #sftp_send_file
+from pathlib import Path
 
 class HomiRobotFactura:
 
@@ -41,6 +41,8 @@ class HomiRobotFactura:
         self.dia = dia
         self.mes = mes
         self.año = año
+
+        self.path = Path(__file__).resolve().parent.parent
 
     def getFactura(self, factura, boolExcel=False):
         print("*** HomiRobotFactura.getFactura ***")
@@ -149,7 +151,23 @@ class HomiRobotFactura:
             #(07)    
             robotClick(162, 140, 1,"click button deshacer")
 
-            self.updateStatus(factura, boolExcel, 1)
+            # aqui 01
+            #self.updateStatus(factura, boolExcel, 1)
+            # Get the directory of the current script
+
+            env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
+            print(env_path)
+            print(os.path.dirname(os.path.abspath(__file__)))
+            sys.exit()
+
+            script_dir = Path(__file__).resolve().parent
+            print(f"Script directory: {script_dir}")
+            sys.exit()
+            # Path to your .bat file
+            bat_file_path = "robot.bat"
+            # Run the .bat file
+            subprocess.run(bat_file_path, shell=True)
+
             end_time = time.time()
             execution_time = end_time - start_time
             print(f"Script executed in {execution_time:.4f} seconds")
@@ -210,20 +228,18 @@ class HomiRobotFactura:
         # print(env_path)
         load_dotenv(env_path)
 
-        # Configuración de la conexión a la base de datos usando variables de entorno
-        '''
-        db_config = {
-            "host": os.getenv("DB_HOST"),
-            "user": os.getenv("DB_USER"),
-            "password": os.getenv("DB_PASSWORD"),
-            "database": os.getenv("DB_NAME")
-        }
-        '''
         fileExists = file_exists(file_path, boolExcel)
         if fileExists:
             end_time = time.time()
             execution_time = end_time - start_time
             self.updateStatus(factura, boolExcel, 3)
+            '''
+            pathBat = os.path.join(self.path, "factura_dia", "update.bat")
+            print(pathBat)
+            #subprocess.run(pathBat, shell=True)
+            subprocess.run([pathBat, factura])
+            sys.exit()
+            '''
             print(f"Script executed in {execution_time:.4f} seconds")
             print("")
         else:
@@ -308,7 +324,7 @@ class HomiRobotFactura:
         :param factura: El número de factura a actualizar.
         """
         try:
-            print("")   
+            #print("")   
             print("*** updateStatus *** [" + str(position) + "]")
             print("boolExcel: " + str(boolExcel))
             # Establish a connection to the database
@@ -319,20 +335,21 @@ class HomiRobotFactura:
                 "password": os.getenv("DB_PASSWORD"),
                 "database": os.getenv("DB_NAME")
             }
-            print("... abriendo la conexión ...")
+            #print("... abriendo la conexión ...")
             cnx = mysql.connector.connect(**db_config)
-            print("... configurando el autocommit ...")
+            #print("... configurando el autocommit ...")
             cnx.autocommit = True
-            print("... creando el cursor ...")
+            #print("... creando el cursor ...")
             cursor = cnx.cursor()            
-            print("... creando el query ...")
+            #print("... creando el query ...")
             if (boolExcel):
                 query = "call robot_soporte_actualizarGenerado('factura-excel','" + str(factura) + "', '')"
             else:
                 query = "call robot_soporte_actualizarGenerado('factura','" + str(factura) + "', '')"
-            print(query)
-            print("... ejecutando el query ...")
+            #print(query)
+            #print("... ejecutando el query ...")
             cursor.execute(query)
+            #print("... fin ...")
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your user name or password")
