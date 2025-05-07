@@ -15,6 +15,7 @@ from robot.homi_robot_factura_dia import HomiRobotFacturaDia
 from robot.homi_robot_cuenta import HomiRobotCuenta
 from robot.homi_robot_imagenologia import HomiRobotImagenologia
 from robot.homi_robot_administrativos import HomiRobotAdministrativo
+from robot.homi_robot_rips import HomiRobotRips
 
 from pywinauto import Application
 from core import isWindowOpen
@@ -76,9 +77,9 @@ class HomiRobot:
             mes = hoy.strftime("%m")   # Mes con dos dígitos
             año = hoy.strftime("%Y")   # Año con cuatro dígitos
 
-            #dia = 2   # Día con dos dígitos
-            #mes = 5   # Mes con dos dígitos
-            #año = 2025   # Año con cuatro dígitos
+            dia = 2   # Día con dos dígitos
+            mes = 5   # Mes con dos dígitos
+            año = 2025   # Año con cuatro dígitos
 
             self.startTime = time.time()
             oRobot = HomiRobotFacturaDia(dia, mes, año, current_dir)
@@ -227,17 +228,18 @@ class HomiRobot:
             cursor = connection.cursor()
             query = """
                 call robot_soporte_getNext();
-            """                
+            """
+            
             cursor.execute(query)
 
             # Cargar datos en variables
             resultado = cursor.fetchone()
-            #print(len(resultado))
             #print(resultado)
             #sys.exit()
 
             if resultado:
                 soporte, factura, identificacion, ingreso, err = resultado  # Asignar valores a variables
+                print(f"soporte: {soporte}, factura: {factura}")
                 if (soporte == 'factura-excel'):
                     oRobotFactura = HomiRobotFactura()
                     oRobotFactura.getFactura(factura, True)
@@ -253,9 +255,13 @@ class HomiRobot:
                 elif (soporte == 'armado-administrativo'):
                     oRobotAdministrativo = HomiRobotAdministrativo()
                     oRobotAdministrativo.getArmado(factura, identificacion, ingreso)
-                else:
-                    oRobotFacturaDia = HomiRobot()
-                    oRobotFacturaDia.factura_dia()
-
+                elif (soporte == 'rips-json'):
+                    oRobotRips = HomiRobotRips()
+                    oRobotRips.getArmado(factura)
+                # elif soporte is None:
+                #     oRobotFacturaDia = HomiRobot()
+                #     oRobotFacturaDia.factura_dia()
+        
+            
             cursor.close()
             connection.close()

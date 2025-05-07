@@ -19,7 +19,7 @@ from datetime import datetime
 from core import isWindowOpen
 from core import windowClose
 from core import robotClick
-from sftp import sftp_send_file
+from #sftp import #sftp_send_file
 
 start_time = time.time()
 
@@ -227,7 +227,7 @@ class HomiRobotCuenta:
 
                 #region subir archivo
                 archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/prueba.pdf"
-                sftp_send_file(file_path, archivo_remoto)
+                #sftp_send_file(file_path, archivo_remoto)
                 #endregion subir archivo
 
                 windowPreviewClose(window)
@@ -322,7 +322,7 @@ class HomiRobotCuenta:
             print("El soporte se ha generado anteriormente")
 
             archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/0000-SOPORTE-ARMADO-CUENTA-{factura}.pdf"
-            sftp_send_file(file_path, archivo_remoto)
+            #sftp_send_file(file_path, archivo_remoto)
 
             actualizar_estado(factura)
             end_time = time.time()

@@ -19,7 +19,7 @@ from datetime import datetime
 from core import isWindowOpen
 from core import windowClose
 from core import robotClick
-from sftp import sftp_send_file
+# from #sftp import #sftp_send_file
 
 class HomiRobotFactura:
 
@@ -191,7 +191,7 @@ class HomiRobotFactura:
                 print("factura excel")
                 basename = rf"{factura}.xlsx"
                 archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
-                sftp_send_file(file_path, archivo_remoto)
+                #sftp_send_file(file_path, archivo_remoto)
 
                 timestamp = int(time.time())
 
@@ -211,7 +211,7 @@ class HomiRobotFactura:
                 print("factura")
                 basename = rf"{factura}.pdf"            
                 archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
-                sftp_send_file(file_path, archivo_remoto)
+                ##sftp_send_file(file_path, archivo_remoto)
 
             #(07)    
             robotClick(162, 140, 1,"click button deshacer")
@@ -253,11 +253,11 @@ class HomiRobotFactura:
                 if (boolExcel):
                     basename = rf"{factura}.xlsx"
                     archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
-                    sftp_send_file(file_path, archivo_remoto)
+                    #sftp_send_file(file_path, archivo_remoto)
                 else:
                     basename = rf"{factura}.pdf"            
                     archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
-                    sftp_send_file(file_path, archivo_remoto)
+                    #sftp_send_file(file_path, archivo_remoto)
 
                 self.updateStatus(factura, boolExcel)
                 return True
