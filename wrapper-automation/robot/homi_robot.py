@@ -33,37 +33,6 @@ class HomiRobot:
     # def __init__(self):
     #     print("HomiRobot initialized")
 
-    '''
-    def run(self):
-        print("*** HomiRobot.run ***")
-        start_time = 0
-        oRobot = HomiRobotFactura()
-        oRobotCuenta = HomiRobotCuenta()
-        oRobotImagenologia = HomiRobotImagenologia()
-        oRobotAdministrativo = HomiRobotAdministrativo()
-        while True:
-            self.procesarFacturaExcel = oRobot.getFacturas(True)
-            print("factura excel procesar: " + str(self.procesarFacturaExcel))
-            if (not self.procesarFacturaExcel):
-                self.procesarFactura = oRobot.getFacturas(False)
-                print("factura procesar: " + str(self.procesarFactura))
-
-                if (not self.procesarFactura):
-                    self.procesarCuenta = oRobotCuenta.getFacturas()
-                    print("cuenta procesar: " + str(self.procesarCuenta)) 
-
-                    if (not self.procesarCuenta):
-                        self.procesarImagenologia = oRobotImagenologia.getFacturas()
-                        print("imagenologia procesar: " + str(self.procesarImagenologia))
-
-                        if (not self.procesarImagenologia):
-                            self.procesarAdministrativo = oRobotAdministrativo.getFacturas()
-                            print("administrativo procesar: " + str(self.procesarAdministrativo))
-
-            if (not self.procesarFacturaExcel and not self.procesarFactura):
-                self.factura_dia()
-    '''
-
     def factura_dia(self):
         print("*** HomiRobot.factura_dia ***")
 
@@ -76,10 +45,6 @@ class HomiRobot:
             dia = hoy.strftime("%d")   # Día con dos dígitos
             mes = hoy.strftime("%m")   # Mes con dos dígitos
             año = hoy.strftime("%Y")   # Año con cuatro dígitos
-
-            dia = 2   # Día con dos dígitos
-            mes = 5   # Mes con dos dígitos
-            año = 2025   # Año con cuatro dígitos
 
             self.startTime = time.time()
             oRobot = HomiRobotFacturaDia(dia, mes, año, current_dir)
@@ -196,6 +161,7 @@ class HomiRobot:
         robotWindowLogin()
 
     def soporteGetSiguiente(self):
+        print("**** soporteGetSiguiente ****")
 
         window = auto.WindowControl(searchDepth=1, AutomationId="FormMdi")
         if not window.Exists():
@@ -219,9 +185,6 @@ class HomiRobot:
                 "database": os.getenv("DB_NAME")
             }
 
-            #print(db_config);
-            #sys.exit()
-
             # Establish a connection to the database
             connection = MySQLdb.connect(**db_config)
             # Create a cursor object to execute queries
@@ -229,16 +192,15 @@ class HomiRobot:
             query = """
                 call robot_soporte_getNext();
             """
-            
             cursor.execute(query)
 
             # Cargar datos en variables
             resultado = cursor.fetchone()
-            # print(resultado)
-            # sys.exit()
-
+            cursor.close()
+            connection.close()
             if resultado:
-                soporte, factura, identificacion, ingreso, err = resultado  # Asignar valores a variables
+                print("*** a seleccionar el robot ***")
+                prioridad, soporte, factura, identificacion, ingreso, err = resultado  # Asignar valores a variables
                 print(f"soporte: {soporte}, factura: {factura}")
                 if (soporte == 'factura-excel'):
                     oRobotFactura = HomiRobotFactura()
@@ -258,10 +220,6 @@ class HomiRobot:
                 elif (soporte == 'rips-json'):
                     oRobotRips = HomiRobotRips()
                     oRobotRips.getArmado(factura)
-                # elif soporte is None:
-                #     oRobotFacturaDia = HomiRobot()
-                #     oRobotFacturaDia.factura_dia()
-        
-            
-            cursor.close()
-            connection.close()
+                else:
+                    oRobotFacturaDia = HomiRobot()
+                    oRobotFacturaDia.factura_dia()
