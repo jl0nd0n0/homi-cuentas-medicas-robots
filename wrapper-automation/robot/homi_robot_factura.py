@@ -88,16 +88,8 @@ class HomiRobotFactura:
            
             # (04)
             auto.SendKeys(file_path)
-            #sys.exit()
             auto.SendKeys("{Enter}")
             time.sleep(0.5)
-
-            # (05)
-            # guardar como si se despliega
-            # button = window.Control(searchDepth=5, AutomationId="CommandButton_6")
-            # if button.Exists():
-            #     button.Click()
-            #     time.sleep(0.25)
 
             # (05)    
             #click boton no abrir    
@@ -119,6 +111,9 @@ class HomiRobotFactura:
             else:
                 print("Close button not found.")
             time.sleep(1)
+
+            # actualizar el estado del soporte
+            self.updateStatus(factura, boolExcel, 4)
 
             '''
             if (boolExcel):
@@ -149,20 +144,14 @@ class HomiRobotFactura:
             '''
 
             #(07)    
-            robotClick(162, 140, 1,"click button deshacer")
+            robotClick(123, 137, 1,"click button deshacer")
 
             # aqui 01
             #self.updateStatus(factura, boolExcel, 1)
             # Get the directory of the current script
 
-            env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
-            print(env_path)
-            print(os.path.dirname(os.path.abspath(__file__)))
-            sys.exit()
-
             script_dir = Path(__file__).resolve().parent
             print(f"Script directory: {script_dir}")
-            sys.exit()
             # Path to your .bat file
             bat_file_path = "robot.bat"
             # Run the .bat file

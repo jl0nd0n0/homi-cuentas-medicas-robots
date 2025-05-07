@@ -200,7 +200,7 @@ class HomiRobot:
             connection.close()
             if resultado:
                 print("*** a seleccionar el robot ***")
-                soporte, factura, identificacion, ingreso, err = resultado  # Asignar valores a variables
+                prioridad, soporte, factura, identificacion, ingreso, err = resultado  # Asignar valores a variables
                 print(f"soporte: {soporte}, factura: {factura}")
                 if (soporte == 'factura-excel'):
                     oRobotFactura = HomiRobotFactura()
