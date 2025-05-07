@@ -44,10 +44,11 @@ def sftp_send_file(archivo_local, archivo_remoto):
     archivo_comprimido = os.path.join(temp_dir, f"{nombre_archivo}.tmp.pdf")
 
     # Comprimir el PDF con pikepdf
+    '''
     if not comprimir_pdf_pikepdf(archivo_local, archivo_comprimido):
         print("⚠️ No se pudo comprimir. Enviando archivo original...")
         archivo_comprimido = archivo_local  # Fallback al original
-
+    
     # Establecer conexión SSH y SFTP
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -77,3 +78,4 @@ def sftp_send_file(archivo_local, archivo_remoto):
     sftp.close()
     ssh.close()
     shutil.rmtree(temp_dir)  # Borrar carpeta temporal
+    '''
