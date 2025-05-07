@@ -77,10 +77,6 @@ class HomiRobot:
             mes = hoy.strftime("%m")   # Mes con dos dígitos
             año = hoy.strftime("%Y")   # Año con cuatro dígitos
 
-            dia = 2   # Día con dos dígitos
-            mes = 5   # Mes con dos dígitos
-            año = 2025   # Año con cuatro dígitos
-
             self.startTime = time.time()
             oRobot = HomiRobotFacturaDia(dia, mes, año, current_dir)
             self.endTime = time.time()
@@ -196,6 +192,7 @@ class HomiRobot:
         robotWindowLogin()
 
     def soporteGetSiguiente(self):
+        print("**** soporteGetSiguiente ****")
 
         window = auto.WindowControl(searchDepth=1, AutomationId="FormMdi")
         if not window.Exists():
@@ -238,6 +235,7 @@ class HomiRobot:
             #sys.exit()
 
             if resultado:
+                print("*** a seleccionar el robot ***")
                 soporte, factura, identificacion, ingreso, err = resultado  # Asignar valores a variables
                 print(f"soporte: {soporte}, factura: {factura}")
                 if (soporte == 'factura-excel'):
@@ -258,9 +256,9 @@ class HomiRobot:
                 elif (soporte == 'rips-json'):
                     oRobotRips = HomiRobotRips()
                     oRobotRips.getArmado(factura)
-                # elif soporte is None:
-                #     oRobotFacturaDia = HomiRobot()
-                #     oRobotFacturaDia.factura_dia()
+                else:
+                    oRobotFacturaDia = HomiRobot()
+                    oRobotFacturaDia.factura_dia()
         
             
             cursor.close()

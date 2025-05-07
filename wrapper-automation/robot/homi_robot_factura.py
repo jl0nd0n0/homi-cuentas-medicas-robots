@@ -42,81 +42,6 @@ class HomiRobotFactura:
         self.mes = mes
         self.año = año
 
-    def getFacturas(self, boolExcel=False):
-        print("*** HomiRobotFactura.getFacturas ***")
-        try:
-            db_config = {
-                "host": os.getenv("DB_HOST"),
-                "user": os.getenv("DB_USER"),
-                "password": os.getenv("DB_PASSWORD"),
-                "database": os.getenv("DB_NAME")
-            }
-
-            # Establish a connection to the database
-            connection = MySQLdb.connect(**db_config)
-            # Create a cursor object to execute queries
-            cursor = connection.cursor()
-
-            if self.año == None:
-                strDate = "and fecha = curdate()"
-            else:
-                strDate = "and fecha = curdate()"
-                custom_date = datetime(self.año, self.mes, self.dia)
-                formatted = custom_date.strftime("%Y-%m-%d")
-                strDate = "and fecha = '" + str(formatted) + "'"
-
-            #print(strDate)
-            #sys.exit()
-            # Example query
-            if (boolExcel):
-                query = f"""
-                    select numero_factura as factura
-                    from soporte_generar
-                    where  soporte = 'factura-excel'
-                    and ifnull(generado, 0) = 0 
-                    {strDate};
-                """
-            else:
-                query = f"""
-                    select numero_factura as factura
-                    from soporte_generar
-                    where  soporte = 'factura'
-                    and ifnull(generado, 0) = 0 
-                    {strDate};
-                """
-            #print(query)
-            #sys.exit()
-
-            # Execute the query
-            cursor.execute(query)
-
-            # Better: Iterate through results one by one (memory efficient)
-            results = cursor.fetchall()
-            if len(results) == 0:
-                return False
-
-            for row in results:
-                factura = row[0]
-                print("voy a generar factura: " + str(factura))
-                self.getFactura(factura, boolExcel)
-                # end_time = time.time()
-                # duration = end_time - start_time
-                # if (duration > 120):
-                #     return False
-
-            cursor.close()
-            connection.close()
-
-            return True
-
-        except mysql.connector.Error as err:
-            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                print("Something is wrong with your user name or password")
-            elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                print("Database does not exist")
-            else:
-                print(err)
-
     def getFactura(self, factura, boolExcel=False):
         print("*** HomiRobotFactura.getFactura ***")
 
@@ -224,7 +149,7 @@ class HomiRobotFactura:
             #(07)    
             robotClick(162, 140, 1,"click button deshacer")
 
-            self.updateStatus(factura, boolExcel)
+            self.updateStatus(factura, boolExcel, 1)
             end_time = time.time()
             execution_time = end_time - start_time
             print(f"Script executed in {execution_time:.4f} seconds")
@@ -260,22 +185,11 @@ class HomiRobotFactura:
             print(file_path)
             if os.path.exists(file_path):
                 print(f"El archivo {file_path} ya existe 001 !!!")
-                if (boolExcel):
-                    basename = rf"{factura}.xlsx"
-                    archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
-                    #sftp_send_file(file_path, archivo_remoto)
-                else:
-                    basename = rf"{factura}.pdf"            
-                    archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
-                    #sftp_send_file(file_path, archivo_remoto)
-
-                self.updateStatus(factura, boolExcel)
                 return True
-
-            return False
+            else: 
+                return False
 
         start_time = time.time()
-
         path = r"C:\archivos\proyectos\cartera\armado\factura"
         os.makedirs(path, exist_ok=True)
 
@@ -305,16 +219,11 @@ class HomiRobotFactura:
             "database": os.getenv("DB_NAME")
         }
         '''
-
-        #print(file_path)
-        #sys.exit()
         fileExists = file_exists(file_path, boolExcel)
-        #print(fileExists)
-        #sys.exit()
         if fileExists:
             end_time = time.time()
             execution_time = end_time - start_time
-            self.updateStatus()
+            self.updateStatus(factura, boolExcel, 3)
             print(f"Script executed in {execution_time:.4f} seconds")
             print("")
         else:
@@ -392,14 +301,16 @@ class HomiRobotFactura:
             #     robotClick(1145, 602, 8, "trazabilidad de factura")
             #     window_panel(boolExcel)
     
-    def updateStatus(self, factura, boolExcel=False):                
+    def updateStatus(self, factura, boolExcel=False, position=0):                
         """
         Actualiza el campo 'generado' a 1 para la factura especificada.
         
         :param factura: El número de factura a actualizar.
         """
         try:
-            print("****** boolExcel: " + str(boolExcel))
+            print("")   
+            print("*** updateStatus *** [" + str(position) + "]")
+            print("boolExcel: " + str(boolExcel))
             # Establish a connection to the database
 
             db_config = {
@@ -408,14 +319,20 @@ class HomiRobotFactura:
                 "password": os.getenv("DB_PASSWORD"),
                 "database": os.getenv("DB_NAME")
             }
+            print("... abriendo la conexión ...")
             cnx = mysql.connector.connect(**db_config)
-            cursor = cnx.cursor()
+            print("... configurando el autocommit ...")
+            cnx.autocommit = True
+            print("... creando el cursor ...")
+            cursor = cnx.cursor()            
+            print("... creando el query ...")
             if (boolExcel):
                 query = "call robot_soporte_actualizarGenerado('factura-excel','" + str(factura) + "', '')"
             else:
                 query = "call robot_soporte_actualizarGenerado('factura','" + str(factura) + "', '')"
-                cursor.execute(query)
-
+            print(query)
+            print("... ejecutando el query ...")
+            cursor.execute(query)
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your user name or password")
