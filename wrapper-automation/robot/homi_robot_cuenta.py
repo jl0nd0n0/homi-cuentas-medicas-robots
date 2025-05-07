@@ -19,7 +19,11 @@ from datetime import datetime
 from core import isWindowOpen
 from core import windowClose
 from core import robotClick
+<<<<<<< HEAD
 #from sftp import sftp_send_file
+=======
+#from #sftp import #sftp_send_file
+>>>>>>> e85a060172ae4471073b25dd04ced85f3411686d
 
 start_time = time.time()
 

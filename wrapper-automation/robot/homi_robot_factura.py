@@ -187,34 +187,33 @@ class HomiRobotFactura:
                 print("Close button not found.")
             time.sleep(1)
 
+            '''
             if (boolExcel):
                 print("factura excel")
                 basename = rf"{factura}.xlsx"
                 archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
                 #sftp_send_file(file_path, archivo_remoto)
 
-                timestamp = int(time.time())
+                # timestamp = int(time.time())
 
-                url = "https://homi.artemisaips.com/server/php/index.php?k=xlsxFactura&x=cargar_v1"
-                data = {
-                    "p": f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}",
-                    "t": timestamp
-                }
+                # url = "https://homi.artemisaips.com/server/php/index.php?k=xlsxFactura&x=cargar_v1"
+                # data = {
+                #     "p": f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}",
+                #     "t": timestamp
+                # }
 
-                response = requests.post(url, data=data)
-                print("*******************************")
-                print(response)
-                print("*******************************")
+                # response = requests.post(url, data=data)
 
-                if response.ok:
-                    print("✅ Respuesta:", response.json())
-                else:
-                    print("❌ Error:", response.status_code, response.text)
+                # if response.ok:
+                #     print("✅ Respuesta:", response.json())
+                # else:
+                #     print("❌ Error:", response.status_code, response.text)
             else:
                 print("factura")
                 basename = rf"{factura}.pdf"            
                 archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
                 ##sftp_send_file(file_path, archivo_remoto)
+            '''
 
             #(07)    
             robotClick(162, 140, 1,"click button deshacer")
