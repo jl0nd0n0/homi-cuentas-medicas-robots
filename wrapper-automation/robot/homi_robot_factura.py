@@ -202,6 +202,9 @@ class HomiRobotFactura:
                 }
 
                 response = requests.post(url, data=data)
+                print("*******************************")
+                print(response)
+                print("*******************************")
 
                 if response.ok:
                     print("✅ Respuesta:", response.json())

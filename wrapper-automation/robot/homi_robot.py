@@ -223,7 +223,7 @@ class HomiRobot:
             #sys.exit()
 
             # Establish a connection to the database
-            connection = MySQLdb.connect(**db_config)
+            connection = MySQLdb.connect(**db_config, )
             # Create a cursor object to execute queries
             cursor = connection.cursor()
             query = """
