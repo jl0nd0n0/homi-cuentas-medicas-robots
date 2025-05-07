@@ -1,3 +1,3 @@
 @echo off
-cd /d "C:\tools\robot\homi\wrapper-automation"
+cd /d "D:\proyectos-crescend\Homi robots\homi-cuentas-medicas-robots\wrapper-automation"
 python run.py

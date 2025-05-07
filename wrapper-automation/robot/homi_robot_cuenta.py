@@ -20,7 +20,7 @@ from core import isWindowOpen
 from core import windowClose
 from core import robotClick
 #from sftp import sftp_send_file
-
+    
 start_time = time.time()
 
 class HomiRobotCuenta:

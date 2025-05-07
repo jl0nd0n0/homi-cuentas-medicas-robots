@@ -234,8 +234,8 @@ class HomiRobot:
 
             # Cargar datos en variables
             resultado = cursor.fetchone()
-            #print(resultado)
-            #sys.exit()
+            # print(resultado)
+            # sys.exit()
 
             if resultado:
                 soporte, factura, identificacion, ingreso, err = resultado  # Asignar valores a variables
