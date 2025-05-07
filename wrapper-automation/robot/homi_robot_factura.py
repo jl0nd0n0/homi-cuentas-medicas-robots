@@ -190,14 +190,14 @@ class HomiRobotFactura:
             if (boolExcel):
                 print("factura excel")
                 basename = rf"{factura}.xlsx"
-                archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/soportes/soportes_factura/files/{factura}/{basename}"
+                archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
                 sftp_send_file(file_path, archivo_remoto)
 
                 timestamp = int(time.time())
 
                 url = "https://homi.artemisaips.com/server/php/index.php?k=xlsxFactura&x=cargar_v1"
                 data = {
-                    "p": f"/var/www/html/cdn1.artemisaips.com/public_html/homi/soportes/soportes_factura/files/{factura}/{basename}",
+                    "p": f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}",
                     "t": timestamp
                 }
 
@@ -209,7 +209,9 @@ class HomiRobotFactura:
                     print("❌ Error:", response.status_code, response.text)
             else:
                 print("factura")
-                basename = rf"\{factura}.pdf"            
+                basename = rf"{factura}.pdf"            
+                archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
+                sftp_send_file(file_path, archivo_remoto)
 
             #(07)    
             robotClick(162, 140, 1,"click button deshacer")
@@ -248,6 +250,15 @@ class HomiRobotFactura:
         def file_exists(file_path, boolExcel):
             if os.path.exists(file_path):
                 print(f"El archivo {file_path} ya existe !!!")
+                if (boolExcel):
+                    basename = rf"{factura}.xlsx"
+                    archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
+                    sftp_send_file(file_path, archivo_remoto)
+                else:
+                    basename = rf"{factura}.pdf"            
+                    archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
+                    sftp_send_file(file_path, archivo_remoto)
+
                 self.updateStatus(factura, boolExcel)
                 return True
 

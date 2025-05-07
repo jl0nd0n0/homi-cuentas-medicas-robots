@@ -13,6 +13,8 @@ import MySQLdb
 from robot.homi_robot_factura import HomiRobotFactura
 from robot.homi_robot_factura_dia import HomiRobotFacturaDia
 from robot.homi_robot_cuenta import HomiRobotCuenta
+from robot.homi_robot_imagenologia import HomiRobotImagenologia
+from robot.homi_robot_administrativos import HomiRobotAdministrativo
 
 from pywinauto import Application
 from core import isWindowOpen
@@ -34,8 +36,10 @@ class HomiRobot:
     def run(self):
         print("*** HomiRobot.run ***")
         start_time = 0
-        oRobot = HomiRobotFactura(2, 5, 2025)
-        oRobotCuenta = HomiRobotCuenta(2, 5, 2025)
+        oRobot = HomiRobotFactura()
+        oRobotCuenta = HomiRobotCuenta()
+        oRobotImagenologia = HomiRobotImagenologia()
+        oRobotAdministrativo = HomiRobotAdministrativo()
         while True:
             self.procesarFacturaExcel = oRobot.getFacturas(True)
             print("factura excel procesar: " + str(self.procesarFacturaExcel))
@@ -46,6 +50,14 @@ class HomiRobot:
                 if (not self.procesarFactura):
                     self.procesarCuenta = oRobotCuenta.getFacturas()
                     print("cuenta procesar: " + str(self.procesarCuenta)) 
+
+                    if (not self.procesarCuenta):
+                        self.procesarImagenologia = oRobotImagenologia.getFacturas()
+                        print("imagenologia procesar: " + str(self.procesarImagenologia))
+
+                        if (not self.procesarImagenologia):
+                            self.procesarAdministrativo = oRobotAdministrativo.getFacturas()
+                            print("administrativo procesar: " + str(self.procesarAdministrativo))
 
             if (not self.procesarFacturaExcel and not self.procesarFactura):
                 self.factura_dia()
@@ -236,6 +248,15 @@ class HomiRobot:
                 elif (soporte == 'armado-cuenta'):
                     oRobotCuenta = HomiRobotCuenta()
                     oRobotCuenta.getArmado(factura, identificacion, ingreso)
+                elif (soporte == 'imagenologia'):
+                    oRobotImagenologia = HomiRobotImagenologia()
+                    oRobotImagenologia.getArmado(factura, identificacion, ingreso)
+                elif (soporte == 'armado-administrativo'):
+                    oRobotAdministrativo = HomiRobotAdministrativo()
+                    oRobotAdministrativo.getArmado(factura, identificacion, ingreso)
+                # elif soporte is None:
+                #     oRobotFacturaDia = HomiRobot()
+                #     oRobotFacturaDia.factura_dia()
         
             
             cursor.close()

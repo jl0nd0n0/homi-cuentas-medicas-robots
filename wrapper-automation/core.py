@@ -4,8 +4,6 @@ import win32con
 import time
 import os
 
-import uiautomation as auto
-
 # Cargar variables de entorno desde el archivo .env
 # Obtener la ruta absoluta del archivo .env en el directorio superior
 # env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')

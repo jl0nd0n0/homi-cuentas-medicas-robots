@@ -137,7 +137,7 @@ class HomiRobotCuenta:
                     print("Se ha actualizado el estado a generado !")
                 else:
                     query = """
-                        call robot_soporte_actualizarGenerado('armado-cuenta', %s, 'No se ha encontrado el ingreso, revisar manualmente');
+                        call robot_soporte_actualizarGenerado('armado-cuenta', %s, 'sin soporte');
                     """
                     print("Se ha actualizado el estado, no se ha encontrado el ingreso, revisar manual !")
                 # Ejecutar la consulta con el parámetro de la factura
@@ -160,7 +160,6 @@ class HomiRobotCuenta:
                     cursor.close()
                 if 'conn' in locals() and connection:
                     connection.close()
-
 
         def windowPreviewClose(window):
             # (1)
@@ -227,11 +226,8 @@ class HomiRobotCuenta:
                 #sys.exit()
 
                 #region subir archivo
-                # Definir los archivos
-                archivo_local = rf"C:\archivos\proyectos\cartera\armado\cuenta\0000-SOPORTE-ARMADO-CUENTA-{factura}.pdf"
-                #SOPORTE_CUENTA_PATH_SERVER = /var/www/html/cdn1.artemisaips.com/public_html/homi/soportes/soportes_factura/files/
-                archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/soportes/soportes_factura/files/{factura}/0000-SOPORTE-ARMADO-CUENTA-{factura}.pdf"
-                #sftp_send_file(archivo_local, archivo_remoto)
+                archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/prueba.pdf"
+                sftp_send_file(file_path, archivo_remoto)
                 #endregion subir archivo
 
                 windowPreviewClose(window)
@@ -324,6 +320,10 @@ class HomiRobotCuenta:
 
         if os.path.exists(file_path):
             print("El soporte se ha generado anteriormente")
+
+            archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/0000-SOPORTE-ARMADO-CUENTA-{factura}.pdf"
+            sftp_send_file(file_path, archivo_remoto)
+
             actualizar_estado(factura)
             end_time = time.time()
             execution_time = end_time - start_time
@@ -370,4 +370,3 @@ class HomiRobotCuenta:
                 robotClick(624, 326, 7, "click en boton Consulta Historias")
 
                 bloqueUIPaciente()
-
