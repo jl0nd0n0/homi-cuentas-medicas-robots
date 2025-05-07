@@ -5,7 +5,12 @@ parent_folder = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Add the parent folder to sys.path
 sys.path.append(parent_folder)
 import time
+
+import mysql.connector
+from mysql.connector import errorcode
 import MySQLdb
+
+
 import traceback
 import subprocess
 import requests
@@ -104,12 +109,13 @@ class HomiRobotFactura:
 
             return True
 
-        except MySQLdb.Error as e:
-                print(f"Error: {e}")
-                connection.rollback()  # Rollback on error 
-        except Exception as e:
-            print(f"Error crítico:")
-            traceback.print_exc()
+        except mysql.connector.Error as err:
+            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                print("Something is wrong with your user name or password")
+            elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                print("Database does not exist")
+            else:
+                print(err)
 
     def getFactura(self, factura, boolExcel=False):
         print("*** HomiRobotFactura.getFactura ***")
@@ -250,8 +256,10 @@ class HomiRobotFactura:
             #print(f"Script executed in {execution_time:.4f} seconds")
 
         def file_exists(file_path, boolExcel):
+            print("file_exists")
+            print(file_path)
             if os.path.exists(file_path):
-                print(f"El archivo {file_path} ya existe !!!")
+                print(f"El archivo {file_path} ya existe 001 !!!")
                 if (boolExcel):
                     basename = rf"{factura}.xlsx"
                     archivo_remoto = f"/var/www/html/cdn1.artemisaips.com/public_html/homi/armado/{factura}/{basename}"
@@ -289,12 +297,14 @@ class HomiRobotFactura:
         load_dotenv(env_path)
 
         # Configuración de la conexión a la base de datos usando variables de entorno
+        '''
         db_config = {
             "host": os.getenv("DB_HOST"),
             "user": os.getenv("DB_USER"),
             "password": os.getenv("DB_PASSWORD"),
             "database": os.getenv("DB_NAME")
         }
+        '''
 
         #print(file_path)
         #sys.exit()
@@ -304,9 +314,9 @@ class HomiRobotFactura:
         if fileExists:
             end_time = time.time()
             execution_time = end_time - start_time
+            self.updateStatus()
             print(f"Script executed in {execution_time:.4f} seconds")
             print("")
-            #sys.exit()
         else:
             # Find a window by its title
             print("p01")
@@ -345,8 +355,6 @@ class HomiRobotFactura:
                     print("PASO 03")
                     print("*****")
                     window.SetActive()
-                   
-                    
 
             # elif (isWindowOpen("Trazabilidad de Factura")):
             #     print("*****")
@@ -393,39 +401,31 @@ class HomiRobotFactura:
         try:
             print("****** boolExcel: " + str(boolExcel))
             # Establish a connection to the database
+
             db_config = {
                 "host": os.getenv("DB_HOST"),
                 "user": os.getenv("DB_USER"),
                 "password": os.getenv("DB_PASSWORD"),
                 "database": os.getenv("DB_NAME")
             }
-            connection = MySQLdb.connect(**db_config)
-            # Create a cursor object to execute queries
-            cursor = connection.cursor()        
-            # Example query
-            # Update query with parameters
+            cnx = mysql.connector.connect(**db_config)
+            cursor = cnx.cursor()
             if (boolExcel):
-                query = """
-                    call robot_soporte_actualizarGenerado('factura-excel', %s, '');
-                """
+                query = "call robot_soporte_actualizarGenerado('factura-excel','" + str(factura) + "', '')"
             else:
-                query = """
-                    call robot_soporte_actualizarGenerado('factura', %s, '');
-                """
-            
-            # Execute the query
-            params = (factura,)
-            cursor.execute(query, params)
-            connection.commit()
-            cursor.close()
-            connection.close()
-            print(f"El campo 'generado' ha sido actualizado a 1 para la factura {factura}.")
-        except MySQLdb.Error as e:
-            print(f"Error: {e}")
-            connection.rollback()  # Rollback on error 
-        finally:
+                query = "call robot_soporte_actualizarGenerado('factura','" + str(factura) + "', '')"
+                cursor.execute(query)
+
+        except mysql.connector.Error as err:
+            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                print("Something is wrong with your user name or password")
+            elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                print("Database does not exist")
+            else:
+                print(err)
+        else:
             # Close connection
             if 'cursor' in locals() and cursor:
                 cursor.close()
-            if 'conn' in locals() and connection:
-                connection.close()
+            if 'cnx' in locals() and cnx:
+                cnx.close()

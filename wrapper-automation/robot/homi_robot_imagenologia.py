@@ -362,7 +362,7 @@ class HomiRobotImagenologia:
         file_path = path + rf"\0001-SOPORTE-ARMADO-IMAGENOLOGIA-{factura}.pdf"
 
         if os.path.exists(file_path):
-            print(f"El archivo {file_path} ya existe !!!")
+            print(f"El archivo {file_path} ya existe 002 !!!")
             actualizar_generado(factura)
             sys.exit()
 

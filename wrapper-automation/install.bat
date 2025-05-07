@@ -3,4 +3,4 @@
 ::Homi++2025
 
 python.exe -m pip install --upgrade pip
-pip install python-dotenv pyautogui pywinauto uiautomation mysql-connector-python requests mysqlclient pandas python-socketio openpyxl
+pip install python-dotenv pyautogui pywinauto uiautomation mysql-connector-python requests mysqlclient pandas python-socketio openpyxl DBUtils mysqlclient
