@@ -52,7 +52,7 @@ class HomiRobotFacturaDia:
             """
             try:
                 # Conectar a la base de datos
-                connection = mysql.connector.connect(**db_config)
+                connection = mysql.connector.connect(**db_config, autocommit=True)
                 cursor = connection.cursor()
 
                 # Consulta SQL para actualizar el campo 'generado'
@@ -64,7 +64,7 @@ class HomiRobotFacturaDia:
                 """
                 # Ejecutar la consulta con el parámetro de la factura
                 cursor.execute(query, (factura,))
-                connection.commit()
+                #connection.commit()
 
                 # Verificar si se realizó la actualización
                 if cursor.rowcount > 0:
@@ -289,6 +289,8 @@ class HomiRobotFacturaDia:
         print(f"Batch file exited with code {result.returncode}")
 
     def crearCSV(self, file, script_dir):
+        print("crearCSV")
+        sys.exit()
         os.chdir(script_dir)
         print("Current Working Directory:", os.getcwd())
         # Ruta del archivo Excel
