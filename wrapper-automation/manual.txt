@@ -1,0 +1,43 @@
+# setup
+
+# PARA WSL
+abrir terminal
+cd setup/wsl (enter)
+wsl (enter)
+su (enter)
+3819
+sudo sed -i 's/\r$//' install_ssh_wsl.sh
+chmod +x install_ssh_wsl.sh
+./install_ssh_wsl.sh
+
+# EN POWERSHELL
+# ingresar a la carpeta setup/powershell
+#abrir powershell como administrador
+Set-ExecutionPolicy RemoteSigned -Force 
+
+.\configure_windows.ps1
+
+
+
+scp * usuario@172.26.0.10:/mnt/c/tools/robot/homi/wrapper-automation/
+
+
+# manual agendar tarea en windows
+# abrir powershell como administrador
+
+Get-LocalUser -Name "jlondono"
+New-LocalUser "jlondono" -Password (ConvertTo-SecureString "3819" -AsPlainText -Force)
+Add-LocalGroupMember -Group "Administradores" -Member "jlondono\jlondono"
+
+
+#Create a .bat file run.bat with:
+@echo off
+cd /d "C:\tools\robot\homi\wrapper-automation"
+python workflow.py
+
+#Open Task Scheduler
+#Create a new task:
+Trigger: At startup
+Action: Start a program → point to your .bat file
+Check "Run whether user is logged on or not"
+Check "Run with highest privileges"

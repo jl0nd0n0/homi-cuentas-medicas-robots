@@ -1,0 +1,13 @@
+2025-05-05 06:16:03.375 homi_robot_factura.py[206] window_panel -> Find Control Timeout(10s): {Name: 'Trazabilidad de Factura'}
+2025-05-05 06:21:56.502 homi_robot_factura.py[206] window_panel -> Find Control Timeout(10s): {Name: 'Trazabilidad de Factura'}
+2025-05-05 06:52:03.169 homi_robot_factura.py[147] window_preview -> Find Control Timeout(10s): {Name: 'btnOK'}
+2025-05-06 11:24:41.014 homi_robot.py[108] robotWindowLogin -> Find Control Timeout(10s): {Name: 'Login Vie Cloud Native Client'}
+2025-05-06 11:27:24.655 homi_robot.py[108] robotWindowLogin -> Find Control Timeout(10s): {Name: 'Login Vie Cloud Native Client'}
+2025-05-06 14:23:23.723 homi_robot.py[141] robotWindowLogin -> Find Control Timeout(10s): {AutomationId: 'idSIButton9'}
+2025-05-06 14:25:26.339 homi_robot.py[141] robotWindowLogin -> Find Control Timeout(10s): {AutomationId: 'idSIButton9'}
+2025-05-06 14:28:39.150 homi_robot.py[141] robotWindowLogin -> Find Control Timeout(10s): {AutomationId: 'idSIButton9'}
+2025-05-06 14:37:47.326 homi_robot.py[141] robotWindowLogin -> Find Control Timeout(10s): {AutomationId: 'idSIButton9'}
+2025-05-06 14:41:32.993 homi_robot.py[141] robotWindowLogin -> Find Control Timeout(10s): {AutomationId: 'idSIButton9'}
+2025-05-06 14:44:06.645 homi_robot.py[141] robotWindowLogin -> Find Control Timeout(10s): {Name: 'Siguiente'}
+2025-05-06 14:46:59.112 homi_robot.py[141] robotWindowLogin -> Find Control Timeout(10s): {Name: 'Siguiente'}
+2025-05-06 14:48:43.389 homi_robot.py[141] robotWindowLogin -> Find Control Timeout(10s): {Name: 'Siguiente'}

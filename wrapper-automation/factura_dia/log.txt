@@ -1,0 +1,95 @@
+================================ 
+Ejecutado: s b 03/05/2025 13:42:10,98 
+ParÃ¡metros: 03 05 2025 
+Current Working Directory: C:\tools\robots\homi\wrapper-automation\factura_dia
+Traceback (most recent call last):
+  File "C:\tools\robots\homi\wrapper-automation\factura_dia\crear_csv.py", line 50, in <module>
+    print("\u2705 Archivo CSV generado correctamente desde la fila 9 sin duplicar encabezados.")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jorge\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 0: character maps to <undefined>
+El proceso no tiene acceso al archivo porque est  siendo utilizado por otro proceso.
+El proceso no tiene acceso al archivo porque est  siendo utilizado por otro proceso.
+El proceso no tiene acceso al archivo porque est  siendo utilizado por otro proceso.
+El proceso no tiene acceso al archivo porque est  siendo utilizado por otro proceso.
+03 05
+03,04,05,2025
+Click Opcion vie RCM
+Click Facturacion en Salud
+Click Lista de Facturas
+Click Input Fecha Inicial
+Click Input Fecha Final
+click boton Generar Reporte
+click boton Export Document as ...
+Click Input Fecha Final
+presionando alt + g
+presionando alt + n
+click boton Exit (rojo x)
+Batch file exited with code 0
+================================ 
+Ejecutado: s b 03/05/2025 13:45:29,73 
+ParÃ¡metros:    
+Se requiere como parametro el día (uno o 2 digitos), mes (uno o 2 digitos), año (4 digitos) para el cual se requiere descargar la facturacion .... 
+================================ 
+Ejecutado: s b 03/05/2025 13:46:25,95 
+ParÃ¡metros:    
+Se requiere como parametro el día (uno o 2 digitos), mes (uno o 2 digitos), año (4 digitos) para el cual se requiere descargar la facturacion .... 
+================================ 
+Ejecutado: s b 03/05/2025 15:56:20,73 
+ParÃ¡metros:    
+Se requiere como parametro el día (uno o 2 digitos), mes (uno o 2 digitos), año (4 digitos) para el cual se requiere descargar la facturacion .... 
+================================ 
+Ejecutado: s b 03/05/2025 15:57:50,62 
+ParÃ¡metros:    
+Se requiere como parametro el día (uno o 2 digitos), mes (uno o 2 digitos), año (4 digitos) para el cual se requiere descargar la facturacion .... 
+================================ 
+Ejecutado: s b 03/05/2025 15:59:53,63 
+ParÃ¡metros:    
+Se requiere como parametro el día (uno o 2 digitos), mes (uno o 2 digitos), año (4 digitos) para el cual se requiere descargar la facturacion .... 
+running at s b 03/05/2025 16:10:43,74 
+running at s b 03/05/2025 16:30:57,50 
+running at s b 03/05/2025 16:36:39,17 
+running at s b 03/05/2025 16:38:42,68 
+running at s b 03/05/2025 19:15:43,10 
+running at s b 03/05/2025 19:41:52,97 
+running at s b 03/05/2025 19:42:24,92 
+running at s b 03/05/2025 19:50:26,01 
+running at s b 03/05/2025 19:50:57,78 
+running at s b 03/05/2025 19:56:35,88 
+running at dom 04/05/2025  4:56:33,23 
+running at dom 04/05/2025  4:58:07,03 
+running at dom 04/05/2025  4:58:38,81 
+running at dom 04/05/2025  4:59:10,59 
+running at dom 04/05/2025  4:59:42,33 
+running at dom 04/05/2025  5:07:49,86 
+running at dom 04/05/2025  5:08:21,87 
+running at dom 04/05/2025  5:08:53,71 
+running at dom 04/05/2025  5:13:36,94 
+running at dom 04/05/2025  5:14:08,89 
+running at dom 04/05/2025  5:16:17,11 
+running at dom 04/05/2025  5:17:47,75 
+running at dom 04/05/2025  6:21:00,20 
+running at dom 04/05/2025  6:22:58,49 
+running at dom 04/05/2025  6:24:51,86 
+running at dom 04/05/2025  6:28:39,93 
+running at dom 04/05/2025  6:30:42,45 
+running at dom 04/05/2025  6:32:44,99 
+running at dom 04/05/2025  6:34:47,54 
+running at dom 04/05/2025  6:36:49,21 
+running at dom 04/05/2025  6:38:51,32 
+running at dom 04/05/2025  6:40:53,45 
+running at dom 04/05/2025  6:42:55,70 
+running at dom 04/05/2025  6:44:57,98 
+running at dom 04/05/2025  6:47:00,19 
+running at dom 04/05/2025  6:49:02,44 
+running at dom 04/05/2025  6:51:04,73 
+running at dom 04/05/2025  6:53:06,95 
+running at dom 04/05/2025  6:55:09,02 
+running at dom 04/05/2025  6:57:11,02 
+running at dom 04/05/2025  6:59:13,26 
+running at dom 04/05/2025  7:01:15,45 
+running at dom 04/05/2025  7:36:35,00 
+running at lun 05/05/2025  5:39:55,33 
+running at lun 05/05/2025  5:41:13,64 

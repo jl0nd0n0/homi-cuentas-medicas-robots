@@ -1,0 +1,1 @@
+pip install python-dotenv pyautogui pywinauto uiautomation mysql-connector-python

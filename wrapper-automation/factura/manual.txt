@@ -1,0 +1,19 @@
+#pip install python-socketio
+
+#crear archivo borrar.py
+
+import socketio
+
+# Crear un cliente Socket.IO
+sio = socketio.Client()
+
+# Conectarse al servidor
+sio.connect('http://localhost:3000')
+
+# Emitir un evento
+sio.emit('mensaje', {'data': '¡Hola desde Python!'})
+
+# Cerrar conexión
+sio.disconnect()
+
+python borrar.py

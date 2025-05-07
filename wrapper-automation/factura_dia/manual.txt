@@ -1,0 +1,1 @@
+pm2 start robot.js --name "facturas_diarias" --cron "*/2 * * * *"
